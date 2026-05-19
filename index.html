@@ -4,12 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Escape Game — Code Secret</title>
+<title>Escape Game — Mot Secret</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;700&display=swap" rel="stylesheet"/>
 
 <style>
-
 :root{
   --bg:#080c10;
   --panel:#0d1520;
@@ -22,11 +21,7 @@
   --digit-bg:#060e18;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   background:var(--bg);
@@ -36,275 +31,87 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-  position:relative;
-}
-
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.08) 2px,
-    rgba(0,0,0,0.08) 4px
-  );
-  pointer-events:none;
-}
-
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:radial-gradient(
-    ellipse at center,
-    transparent 40%,
-    rgba(0,0,0,0.9) 100%
-  );
-  pointer-events:none;
 }
 
 .panel{
-  position:relative;
-  z-index:10;
   width:min(520px,94vw);
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:6px;
   padding:46px;
-  box-shadow:
-    0 0 60px rgba(0,200,255,0.08),
-    inset 0 0 20px rgba(0,200,255,0.03);
-}
-
-.corner{
-  position:absolute;
-  width:18px;
-  height:18px;
-  border-color:var(--glow);
-  border-style:solid;
-  opacity:0.5;
-}
-
-.corner-tl{
-  top:10px;
-  left:10px;
-  border-width:2px 0 0 2px;
-}
-
-.corner-tr{
-  top:10px;
-  right:10px;
-  border-width:2px 2px 0 0;
-}
-
-.corner-bl{
-  bottom:10px;
-  left:10px;
-  border-width:0 0 2px 2px;
-}
-
-.corner-br{
-  bottom:10px;
-  right:10px;
-  border-width:0 2px 2px 0;
-}
-
-.status-bar{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:36px;
-  padding-bottom:14px;
-  border-bottom:1px solid rgba(30,58,95,0.5);
-  font-size:10px;
-  letter-spacing:0.2em;
-  color:var(--dim);
-}
-
-.status-dot{
-  display:inline-block;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--glow3);
-  margin-right:8px;
-  box-shadow:0 0 10px var(--glow3);
 }
 
 .title{
   text-align:center;
   font-size:24px;
-  letter-spacing:0.15em;
-  margin-bottom:8px;
+  margin-bottom:10px;
   font-family:'Cinzel', serif;
-  color:#d6f0ff;
 }
 
 .subtitle{
   text-align:center;
   font-size:11px;
   color:var(--dim);
-  letter-spacing:0.3em;
-  margin-bottom:36px;
-}
-
-.progress-wrap{
-  height:3px;
-  background:rgba(30,58,95,0.4);
-  margin-bottom:24px;
-  border-radius:4px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  height:100%;
-  width:100%;
-  background:linear-gradient(90deg,var(--glow),#0080ff);
-  transition:0.4s;
-}
-
-.attempts{
-  text-align:center;
-  margin-bottom:26px;
-  font-size:12px;
-  letter-spacing:0.15em;
-  color:var(--dim);
-}
-
-.attempts span{
-  color:var(--glow);
-  font-size:16px;
-}
-
-.code-row{
-  display:flex;
-  gap:10px;
-  justify-content:center;
   margin-bottom:30px;
 }
 
-.digit{
-  width:54px;
-  height:72px;
+.word-row{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+}
+
+.letter{
+  width:50px;
+  height:60px;
   background:var(--digit-bg);
   border:1px solid var(--border);
-  border-radius:4px;
   color:var(--glow);
   text-align:center;
-  font-size:30px;
-  font-family:'Share Tech Mono', monospace;
+  font-size:26px;
+  text-transform:uppercase;
   outline:none;
-  caret-color:var(--glow);
-  text-shadow:0 0 12px rgba(0,200,255,0.7);
 }
 
-.digit:focus{
+.letter:focus{
   border-color:var(--glow);
-  box-shadow:
-    0 0 0 1px var(--glow),
-    0 0 20px rgba(0,200,255,0.2);
-}
-
-.sep{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:8px;
-}
-
-.sep-dot{
-  width:4px;
-  height:4px;
-  border-radius:50%;
-  background:var(--dim);
+  box-shadow:0 0 10px rgba(0,200,255,0.3);
 }
 
 .btn{
   width:100%;
   padding:15px;
-  background:transparent;
   border:1px solid var(--glow);
+  background:transparent;
   color:var(--glow);
   cursor:pointer;
-  border-radius:4px;
-  letter-spacing:0.25em;
-  font-size:13px;
-  margin-bottom:12px;
-}
-
-.btn:hover{
-  background:rgba(0,200,255,0.05);
-  box-shadow:0 0 18px rgba(0,200,255,0.2);
-}
-
-.btn-reset{
-  border-color:var(--dim);
-  color:var(--dim);
+  margin-top:10px;
 }
 
 .feedback{
-  min-height:60px;
-  margin-bottom:20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  min-height:50px;
   text-align:center;
+  margin:15px 0;
   opacity:0;
-  transition:0.3s;
 }
 
-.feedback.show{
-  opacity:1;
-}
-
-.feedback.error{
-  color:var(--glow2);
-}
-
-.feedback.success{
-  color:var(--glow3);
-}
-
-.feedback.warning{
-  color:orange;
-}
-
-.msg-big{
-  font-size:15px;
-  letter-spacing:0.15em;
-}
-
-.msg-small{
-  font-size:10px;
-  opacity:0.7;
-  letter-spacing:0.2em;
-}
-
-.hint{
-  text-align:center;
-  margin-top:6px;
-  font-size:10px;
-  letter-spacing:0.2em;
-  color:var(--dim);
-}
+.feedback.show{opacity:1;}
+.feedback.error{color:var(--glow2);}
+.feedback.success{color:var(--glow3);}
 
 .success-overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,10,6,0.94);
+  background:rgba(0,10,6,0.95);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:18px;
   opacity:0;
   pointer-events:none;
-  transition:0.5s;
-  z-index:200;
-  touch-action:none;
+  transition:0.4s;
 }
 
 .success-overlay.active{
@@ -313,51 +120,16 @@ body::after{
 }
 
 .success-title{
-  font-size:54px;
+  font-size:50px;
   color:var(--glow3);
   font-family:'Cinzel', serif;
-  letter-spacing:0.2em;
-  text-shadow:0 0 60px rgba(0,255,136,0.8);
 }
 
 .success-sub{
-  font-size:12px;
-  letter-spacing:0.3em;
-  opacity:0.7;
-}
-
-.success-code{
-  font-size:42px;
-  color:var(--glow3);
-  letter-spacing:0.5em;
-  padding-left:0.5em;
-}
-
-.btn-play-again{
   margin-top:10px;
-  padding:14px 40px;
-  border:1px solid var(--glow3);
-  background:transparent;
+  font-size:14px;
+  text-align:center;
   color:var(--glow3);
-  cursor:pointer;
-  border-radius:4px;
-  letter-spacing:0.25em;
-}
-
-.btn-play-again:hover{
-  background:rgba(0,255,136,0.08);
-}
-
-@keyframes shake{
-  0%,100%{transform:translateX(0);}
-  20%{transform:translateX(-6px);}
-  40%{transform:translateX(6px);}
-  60%{transform:translateX(-4px);}
-  80%{transform:translateX(4px);}
-}
-
-.shake{
-  animation:shake 0.5s;
 }
 
 </style>
@@ -367,307 +139,88 @@ body::after{
 
 <div class="panel">
 
-<div class="corner corner-tl"></div>
-<div class="corner corner-tr"></div>
-<div class="corner corner-bl"></div>
-<div class="corner corner-br"></div>
+  <div class="title">DÉVERROUILLAGE</div>
+  <div class="subtitle">TROUVE LE MOT SECRET</div>
 
-<div class="status-bar">
-  <span><span class="status-dot"></span>SYSTÈME ACTIF</span>
-  <span id="clock">--:--:--</span>
-</div>
+  <div class="word-row" id="wordRow"></div>
 
-<div class="title">DÉVERROUILLAGE</div>
-<div class="subtitle">ENTREZ LE CODE SECRET</div>
+  <div class="feedback" id="feedback"></div>
 
-<div class="progress-wrap">
-  <div class="progress-bar" id="progressBar"></div>
-</div>
-
-<div class="attempts">
-  TENTATIVES RESTANTES :
-  <span id="attemptsLeft">5</span>
-</div>
-
-<div class="code-row">
-
-<input class="digit" maxlength="1">
-<input class="digit" maxlength="1">
-<input class="digit" maxlength="1">
-
-<div class="sep">
-  <div class="sep-dot"></div>
-  <div class="sep-dot"></div>
-</div>
-
-<input class="digit" maxlength="1">
-<input class="digit" maxlength="1">
-<input class="digit" maxlength="1">
+  <button class="btn" onclick="verify()">VÉRIFIER</button>
 
 </div>
 
-<div class="feedback" id="feedback">
-  <div class="msg-big" id="fbBig"></div>
-  <div class="msg-small" id="fbSmall"></div>
-</div>
-
-<button class="btn" id="btnVerif">▶ VÉRIFIER LE CODE</button>
-
-<button class="btn btn-reset" id="btnReset">
-↺ RÉINITIALISER
-</button>
-
-<div class="hint">
-TAPEZ UN CHIFFRE PAR CASE
-</div>
-
-</div>
-
-<div class="success-overlay" id="successOverlay">
-
-<div class="success-title">BRAVO !</div>
-
-<div class="success-sub">
-CODE CORRECT — SYSTÈME DÉVERROUILLÉ
-</div>
-
-<div class="success-code" id="successCode"></div>
-
-<button class="btn-play-again" id="btnReplay">
-↺ REJOUER
-</button>
-
+<div class="success-overlay" id="success">
+  <div class="success-title">BRAVO !</div>
+  <div class="success-sub">Rendez-vous à la cantine...</div>
 </div>
 
 <script>
 
-const SECRET_CODE = "123456";
-const MAX_ATTEMPTS = 5;
+const SECRET = "CURIEUX";
+const MAX = 3;
 
 let attempts = 0;
 let locked = false;
 
-const digits = [...document.querySelectorAll('.digit')];
+const row = document.getElementById("wordRow");
 
-function updateClock(){
-
-  const n = new Date();
-
-  const pad = v => String(v).padStart(2,'0');
-
-  document.getElementById('clock').textContent =
-    `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
-}
-
-setInterval(updateClock,1000);
-updateClock();
-
-digits.forEach((d,i)=>{
-
-  d.setAttribute("inputmode","numeric");
-  d.setAttribute("pattern","[0-9]*");
-
-  d.addEventListener('input',()=>{
-
-    d.value = d.value.replace(/[^0-9]/g,'');
-
-    if(d.value.length > 1){
-      d.value = d.value.slice(-1);
-    }
-
-    if(d.value && i < digits.length-1){
-      digits[i+1].focus();
+// création des cases
+for(let i=0;i<SECRET.length;i++){
+  const input = document.createElement("input");
+  input.className = "letter";
+  input.maxLength = 1;
+  input.addEventListener("input", () => {
+    input.value = input.value.toUpperCase().replace(/[^A-Z]/g,'');
+    if(input.value && i < SECRET.length-1){
+      row.children[i+1].focus();
     }
   });
-
-  d.addEventListener('keydown',e=>{
-
-    if(e.key === 'Backspace'){
-
-      if(d.value === '' && i > 0){
-        digits[i-1].focus();
-      }
-    }
-
-    if(e.key === 'ArrowLeft' && i > 0){
-      digits[i-1].focus();
-    }
-
-    if(e.key === 'ArrowRight' && i < digits.length-1){
-      digits[i+1].focus();
-    }
-
-    if(e.key === 'Enter'){
-      verify();
-    }
-  });
-
-});
-
-function getCode(){
-  return digits.map(d=>d.value).join('');
+  row.appendChild(input);
 }
 
-function showFeedback(type,big,small){
+const inputs = () => [...document.querySelectorAll(".letter")];
 
-  const fb = document.getElementById('feedback');
-
-  fb.className = 'feedback ' + type + ' show';
-
-  document.getElementById('fbBig').textContent = big;
-  document.getElementById('fbSmall').textContent = small;
+function getWord(){
+  return inputs().map(i => i.value).join("");
 }
 
-function shakeDigits(){
-
-  digits.forEach(d=>{
-
-    d.classList.remove('shake');
-
-    void d.offsetWidth;
-
-    d.classList.add('shake');
-  });
-}
-
-function updateProgress(){
-
-  const ratio =
-    (MAX_ATTEMPTS - attempts) / MAX_ATTEMPTS;
-
-  document.getElementById('progressBar').style.width =
-    (ratio * 100) + '%';
+function show(msg, type){
+  const fb = document.getElementById("feedback");
+  fb.className = "feedback show " + type;
+  fb.textContent = msg;
 }
 
 function verify(){
 
   if(locked) return;
 
-  const code = getCode();
+  const word = getWord();
 
-  if(code.length < 6){
-
-    shakeDigits();
-
-    showFeedback(
-      'warning',
-      'CODE INCOMPLET',
-      'REMPLISSEZ LES 6 CASES'
-    );
-
+  if(word.length < SECRET.length){
+    show("Mot incomplet", "error");
     return;
   }
 
-  if(code === SECRET_CODE){
-
+  if(word === SECRET){
     locked = true;
-
-    document.getElementById('successCode').textContent =
-      code.split('').join(' · ');
-
-    setTimeout(()=>{
-
-      document.getElementById('successOverlay')
-        .classList.add('active');
-
-    },300);
-
+    document.getElementById("success").classList.add("active");
     return;
   }
 
   attempts++;
 
-  const left = MAX_ATTEMPTS - attempts;
-
-  document.getElementById('attemptsLeft').textContent =
-    left;
-
-  updateProgress();
-
-  shakeDigits();
+  const left = MAX - attempts;
 
   if(left <= 0){
-
     locked = true;
-
-    showFeedback(
-      'error',
-      'ACCÈS REFUSÉ',
-      'PLUS DE TENTATIVES'
-    );
-
-    digits.forEach(d=>d.disabled = true);
-
+    inputs().forEach(i => i.disabled = true);
+    show("PERDU : plus de tentatives", "error");
     return;
   }
 
-  showFeedback(
-    'error',
-    'CODE INCORRECT',
-    `${left} TENTATIVE(S) RESTANTE(S)`
-  );
+  show("Incorrect — essais restants : " + left, "error");
 }
-
-function resetForm(){
-
-  digits.forEach(d=>{
-
-    d.value = '';
-    d.disabled = false;
-  });
-
-  document.getElementById('feedback')
-    .classList.remove('show');
-
-  digits[0].focus();
-}
-
-function restartGame(){
-
-  document.getElementById('successOverlay')
-    .classList.remove('active');
-
-  locked = false;
-  attempts = 0;
-
-  document.getElementById('attemptsLeft').textContent =
-    MAX_ATTEMPTS;
-
-  document.getElementById('feedback')
-    .classList.remove('show');
-
-  updateProgress();
-
-  digits.forEach(d=>{
-
-    d.disabled = false;
-    d.value = '';
-    d.classList.remove('shake');
-  });
-
-  setTimeout(()=>{
-
-    digits[0].focus();
-
-  },200);
-}
-
-document.getElementById('btnVerif')
-  .addEventListener('click',verify);
-
-document.getElementById('btnReset')
-  .addEventListener('click',resetForm);
-
-document.getElementById('btnReplay')
-  .addEventListener('click',restartGame);
-
-updateProgress();
-
-setTimeout(()=>{
-
-  digits[0].focus();
-
-},500);
 
 </script>
 
